@@ -1,0 +1,125 @@
+class Contacto {
+    constructor(nombre, telefono) {
+      this.nombre = nombre;
+      this.telefono = telefono;
+    }
+  }
+  
+  class Agenda {
+    constructor(tam = 10) {
+      this.contactos = [];
+      this.tamMax = tam;
+    }
+  
+    aniadirContacto(contacto) {
+      if (this.contactos.length >= this.tamMax) {
+        console.log("La agenda está llena, no se pueden añadir más contactos.");
+      } else {
+        if (!this.existeContacto(contacto)) {
+          this.contactos.push(contacto);
+          console.log(`El contacto ${contacto.nombre} ha sido añadido.`);
+        } else {
+          console.log(`El contacto ${contacto.nombre} ya existe en la agenda.`);
+        }
+      }
+    }
+  
+    existeContacto(contacto) {
+      return this.contactos.some(c => c.nombre === contacto.nombre);
+    }
+  
+    listarContactos() {
+      if (this.contactos.length === 0) {
+        console.log("La agenda está vacía.");
+      } else {
+        console.log("Lista de contactos:");
+        this.contactos.forEach(c => console.log(`${c.nombre} - ${c.telefono}`));
+      }
+    }
+  
+    buscarContacto(nombre) {
+      const contacto = this.contactos.find(c => c.nombre === nombre);
+      if (contacto) {
+        console.log(`El teléfono de ${contacto.nombre} es ${contacto.telefono}.`);
+      } else {
+        console.log(`El contacto ${nombre} no existe en la agenda.`);
+      }
+    }
+  
+    eliminarContacto(contacto) {
+      const index = this.contactos.findIndex(c => c.nombre === contacto.nombre);
+      if (index >= 0) {
+        this.contactos.splice(index, 1);
+        console.log(`El contacto ${contacto.nombre} ha sido eliminado.`);
+      } else {
+        console.log(`El contacto ${contacto.nombre} no existe en la agenda.`);
+      }
+    }
+  
+    agendaLlena() {
+      return this.contactos.length >= this.tamMax;
+    }
+  
+    huecosLibres() {
+      const huecos = this.tamMax - this.contactos.length;
+      console.log(`Quedan ${huecos} huecos libres en la agenda.`);
+    }
+  }
+  
+  // Ejemplo de uso
+  const agenda = new Agenda();
+  agenda.aniadirContacto(new Contacto("Juan", "123456789"));
+  agenda.aniadirContacto(new Contacto("María", "987654321"));
+  agenda.aniadirContacto(new Contacto("Juan", "111111111")); // El contacto ya existe
+  agenda.buscarContacto("Pedro"); // El contacto no existe
+  agenda.buscarContacto("María"); // El teléfono de María es 987654321
+  agenda.eliminarContacto(new Contacto("Juan", "123456789"));
+  agenda.listarContactos(); // María - 987654321
+  console.log(agenda.agendaLlena()); // false
+  agenda.huecosLibres(); // Quedan 9 huecos libres en la agenda.
+  
+  const Miagenda = new Agenda();
+  let opcion = "";
+  
+  while (opcion !== "salir") {
+    opcion = prompt(`¿Qué desea hacer?
+      1. Añadir un contacto
+      2. Buscar un contacto
+      3. Eliminar un contacto
+      4. Listar todos los contactos
+      5. Ver si la agenda está llena
+      6. Ver cuántos huecos libres hay
+      Escriba "salir" para cerrar la agenda.`);
+  
+    switch (opcion) {
+      case "1":
+        const nombre = prompt("Escriba el nombre del contacto:");
+        const telefono = prompt("Escriba el teléfono del contacto:");
+        agenda.aniadirContacto(new Contacto(nombre, telefono));
+        break;
+      case "2":
+        const nombreABuscar = prompt("Escriba el nombre del contacto que desea buscar:");
+        agenda.buscarContacto(nombreABuscar);
+        break;
+      case "3":
+        const nombreAEliminar = prompt("Escriba el nombre del contacto que desea eliminar:");
+        agenda.eliminarContacto(new Contacto(nombreAEliminar));
+        break;
+      case "4":
+        agenda.listarContactos();
+        break;
+      case "5":
+        console.log(`La agenda ${agenda.agendaLlena() ? "está" : "no está"} llena.`);
+        break;
+      case "6":
+        agenda.huecosLibres();
+        break;
+      case "salir":
+        console.log("Cerrando la agenda.");
+        break;
+      default:
+        console.log("Opción inválida.");
+        break;
+    }
+  }
+  

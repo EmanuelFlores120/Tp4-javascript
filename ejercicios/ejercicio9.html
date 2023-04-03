@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios JavaScript</title>
+</head>
+<body>
+
+    <script>
+        class Animal {
+  constructor(nombre, edad) {
+    this.nombre = nombre;
+    this.edad = edad;
+  }
+
+  emitirSonido() {
+    console.log("Soy un animal y estoy emitiendo un sonido.");
+  }
+}
+
+class Perro extends Animal {
+  emitirSonido() {
+    console.log("Soy un perro y estoy ladrando.");
+  }
+}
+
+class Gato extends Animal {
+  emitirSonido() {
+    console.log("Soy un gato y estoy maullando.");
+  }
+}
+
+const miPerro = new Perro("Toby", 3);
+const miGato = new Gato("Garfield", 5);
+
+miPerro.emitirSonido(); // output: "Soy un perro y estoy ladrando."
+miGato.emitirSonido(); // output: "Soy un gato y estoy maullando."
+
+    </script>
+    <script>src="../js/ejercicio9.js"</script>
+    
+</body>
+</html>
